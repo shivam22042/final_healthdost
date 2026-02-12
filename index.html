@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HEALTH दोस्त - Welcome</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mint: '#E8F7ED',
+            forest: '#2E7D32',
+            lavender: '#EDE7F6',
+            welcomeText: '#333333',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-mint flex flex-col items-center justify-center p-6">
+  <!-- Header: Logo image -->
+  <header class="flex flex-col items-center mb-8 md:mb-12">
+    <img src="Dark.png" alt="HEALTH दोस्त" class="h-14 md:h-16 w-auto object-contain" />
+  </header>
+
+  <!-- Central card -->
+  <main class="w-full max-w-md bg-white rounded-3xl shadow-lg shadow-black/5 p-8 md:p-10">
+    <h1 class="text-welcomeText text-xl md:text-2xl font-semibold mb-6">Welcome</h1>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <button type="button" class="flex-1 min-w-0 px-6 py-3.5 rounded-2xl bg-lavender text-welcomeText font-medium hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-forest/30">
+        New Patient
+      </button>
+      <button type="button" class="flex-1 min-w-0 px-6 py-3.5 rounded-2xl bg-lavender text-welcomeText font-medium hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-forest/30">
+        Existing Patient
+      </button>
+    </div>
+  </main>
+
+  <script>
+    // Buttons do not navigate; no additional pages.
+    document.querySelectorAll('button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        console.log('Clicked:', this.textContent.trim());
+      });
+    });
+  </script>
+</body>
+</html>
