@@ -5,7 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        mulish: ['Mulish', 'sans-serif'],
+      },
+      fontSize: {
+        h3: ['20px', { lineHeight: '26px' }],
+        p1: ['11px', { lineHeight: '16px' }],
+      },
+    },
   },
   plugins: [],
 }
