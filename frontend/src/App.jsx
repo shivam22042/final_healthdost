@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Dashboard from './pages/Dashboard'
 
 function WelcomeScreen({ onNewPatient, onExistingPatient }) {
   return (
@@ -102,7 +103,7 @@ function RegisterScreen({ onBack, onRegister }) {
   )
 }
 
-function LoginScreen({ onBack }) {
+function LoginScreen({ onBack, onStart }) {
   return (
     <div className="flex-1 flex items-start justify-center px-12 pt-0 min-h-0">
       <div className="bg-white rounded-xl shadow-lg px-10 py-7 w-full max-w-xl shrink-0">
@@ -137,6 +138,7 @@ function LoginScreen({ onBack }) {
           <div className="flex gap-6 pt-6">
             <button
               type="submit"
+              onClick={() => onStart?.()}
               className="flex-1 py-3.5 px-8 text-sm bg-[#ebddfa] text-[#2d3035] font-medium rounded-lg hover:bg-[#E0C8FF] transition-colors"
             >
               Start
@@ -161,9 +163,11 @@ function App() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-200">
       <div className="w-[1024px] h-[600px] bg-[#dcf7de] flex flex-col overflow-hidden shadow-xl">
-        <header className="flex justify-center pt-6 pb-4 shrink-0">
-          <img src="/Dark.png" alt="Health Dost" className="w-[293px] h-[122px] object-contain" />
-        </header>
+        {screen !== 'dashboard' && (
+          <header className="flex justify-center pt-6 pb-4 shrink-0">
+            <img src="/Dark.png" alt="Health Dost" className="w-[293px] h-[122px] object-contain" />
+          </header>
+        )}
 
         {screen === 'welcome' && (
           <WelcomeScreen
@@ -177,7 +181,17 @@ function App() {
             onRegister={() => setScreen('login')}
           />
         )}
-        {screen === 'login' && <LoginScreen onBack={() => setScreen('welcome')} />}
+        {screen === 'login' && (
+          <LoginScreen
+            onBack={() => setScreen('welcome')}
+            onStart={() => setScreen('dashboard')}
+          />
+        )}
+        {screen === 'dashboard' && (
+          <div className="flex-1 min-h-0">
+            <Dashboard onLogout={() => setScreen('welcome')} />
+          </div>
+        )}
       </div>
     </div>
   )
