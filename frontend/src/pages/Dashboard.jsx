@@ -8,9 +8,9 @@ const ICON_SIZE = 24;
 const LOGO_WIDTH = 36;
 const LOGO_HEIGHT = 50;
 
-function HealthCard({ icon, iconBg, title, value, unit, status, statusBg, statusText, graphColor }) {
+function HealthCard({ icon, iconBg, title, value, unit, status, statusBg, statusText }) {
   return (
-    <div className="h-[141px] bg-white rounded-xl shadow-md p-3 flex flex-col gap-1.5 min-w-0 flex-1">
+    <div className="h-[120px] bg-white rounded-xl shadow-md p-3 flex flex-col justify-between min-w-0 flex-1">
       <div className="flex items-center gap-2 shrink-0">
         <div className={`w-[34px] h-[34px] rounded-lg ${iconBg} flex items-center justify-center shrink-0`}>
           <img src={icon} alt="" className="w-[22px] h-[22px] object-contain" />
@@ -19,27 +19,14 @@ function HealthCard({ icon, iconBg, title, value, unit, status, statusBg, status
           {title}
         </span>
       </div>
-      <div className="flex items-baseline gap-1">
+      <div className="flex items-baseline gap-1 shrink-0">
         <span className="font-['Mulish'] text-[#2d3035] font-bold text-base">{value}</span>
         <span className="font-['Mulish'] text-slate-500 text-xs">{unit}</span>
       </div>
-      <div className={`w-[34px] shrink-0 flex items-center justify-center py-0.5 rounded-md ${statusBg} ${statusText}`}>
-        <span className="font-['Mulish'] text-[8px] font-medium leading-tight block truncate min-w-0">
+      <div className={`w-fit shrink-0 flex items-center justify-center py-1 px-2 rounded-md ${statusBg} ${statusText}`}>
+        <span className="font-['Mulish'] text-[9px] font-medium leading-tight">
           {status}
         </span>
-      </div>
-      <div className="h-5 w-full flex-1 min-h-0">
-        <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="w-full h-full">
-          <path
-            d="M 0 12 Q 12 8, 25 10 T 50 8 T 75 12 T 100 6"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={graphColor.replace('bg-', 'text-')}
-          />
-        </svg>
       </div>
     </div>
   )
@@ -73,9 +60,9 @@ export default function Dashboard({ onLogout }) {
     <div className="relative flex h-full w-full min-h-0 bg-[#314490]">
       {/* Main content area – always excludes 72px right gutter (sidebar slot) for layout continuity */}
       <main className="flex-1 min-w-0 flex flex-col p-5 overflow-auto">
-        <div className="flex-1 min-h-0 bg-[#c8e6c9] rounded-3xl p-6 flex gap-6">
+        <div className="flex-1 min-h-0 bg-[#DCF7DE] rounded-3xl p-4 flex gap-4">
           {/* Left: header + health metric cards */}
-          <div className="flex-1 flex flex-col min-w-0 gap-5">
+          <div className="flex-1 flex flex-col min-w-0 gap-2 min-h-0">
             <div className="shrink-0 flex justify-between items-center">
               <h2 className="font-['Space_Grotesk'] text-[36px] leading-[42px] text-[#2d3035] font-semibold">
                 Health Overview
@@ -84,7 +71,8 @@ export default function Dashboard({ onLogout }) {
                 August 12, 2021
               </span>
             </div>
-            {/* Health metric cards */}
+            {/* Health metric cards + Live Heart Rate + Upcoming Appointment */}
+            <div className="flex flex-col gap-2 flex-1 min-h-0 justify-end">
             <div className="flex gap-3 min-h-0 shrink-0">
               <HealthCard
                 icon="/icons/blood_pressure.png"
@@ -95,7 +83,6 @@ export default function Dashboard({ onLogout }) {
                 status="Normal"
                 statusBg="bg-[#FFFBEB]"
                 statusText="text-orange-600"
-                graphColor="bg-orange-400"
               />
               <HealthCard
                 icon="/icons/temperature.png"
@@ -106,7 +93,6 @@ export default function Dashboard({ onLogout }) {
                 status="Normal"
                 statusBg="bg-[#F5F3FF]"
                 statusText="text-purple-600"
-                graphColor="bg-purple-400"
               />
               <HealthCard
                 icon="/icons/blood_oxygen.png"
@@ -117,7 +103,6 @@ export default function Dashboard({ onLogout }) {
                 status="Normal"
                 statusBg="bg-[#E0E7EB]"
                 statusText="text-slate-600"
-                graphColor="bg-slate-400"
               />
               <HealthCard
                 icon="/icons/stress_level.png"
@@ -128,8 +113,47 @@ export default function Dashboard({ onLogout }) {
                 status="Normal"
                 statusBg="bg-[#ECFDF5]"
                 statusText="text-green-700"
-                graphColor="bg-green-500"
               />
+            </div>
+            {/* Live Heart Rate card – full width below card row */}
+            <div className="w-full bg-white rounded-xl shadow-md p-3 flex flex-col gap-2 min-h-0 shrink-0">
+              <div className="flex items-center gap-2 shrink-0">
+                <div className="w-[34px] h-[34px] rounded-lg bg-[#FEE2E2] flex items-center justify-center shrink-0">
+                  <img src="/icons/heart_rate.png" alt="" className="w-[22px] h-[22px] object-contain" />
+                </div>
+                <span className="font-['Mulish'] text-sm leading-[18px] text-[#2d3035] font-bold flex-1 text-right">
+                  Live Heart Rate
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-2 shrink-0">
+                <span className="font-['Mulish'] text-[#2d3035] font-bold text-base">77 <span className="text-slate-500 font-normal text-xs">bpm</span></span>
+                <div className="w-fit flex items-center justify-center py-1 px-2 rounded-md bg-[#FEE2E2] text-red-600">
+                  <span className="font-['Mulish'] text-[9px] font-medium leading-tight">Normal</span>
+                </div>
+              </div>
+              <div className="flex-1 min-h-[60px] w-full rounded-lg overflow-hidden bg-white">
+                <img src="/icons/placeholder_waveform.png" alt="ECG waveform" className="w-full h-full object-cover object-center" />
+              </div>
+            </div>
+            {/* Upcoming Appointment card */}
+            <div className="w-full bg-white rounded-xl shadow-md p-3 flex flex-col gap-2 min-h-0 shrink-0">
+              <div className="flex items-center gap-2 shrink-0">
+                <div className="w-[34px] h-[34px] rounded-lg bg-[#DBEAFE] flex items-center justify-center shrink-0">
+                  <img src="/icons/camera.png" alt="" className="w-[22px] h-[22px] object-contain" />
+                </div>
+                <span className="font-['Mulish'] text-sm leading-[18px] text-[#2d3035] font-bold flex-1 text-right">
+                  Upcoming Appointment
+                </span>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="font-['Mulish'] text-[10px] text-[#2d3035] bg-slate-100 px-1.5 py-0.5 rounded-md leading-tight">
+                  August 14, 2021
+                </span>
+                <span className="font-['Mulish'] text-[10px] text-[#2d3035] leading-tight">
+                  Consultation with Dr. James
+                </span>
+              </div>
+            </div>
             </div>
           </div>
           {/* Right: two boxes with fixed dimensions */}
